@@ -5,7 +5,7 @@ from urllib.error import HTTPError
 from urllib.request import urlretrieve
 from zipfile import ZipFile
 
-from downloadsupport import DownloadSupportMixin
+from downloadsupport import DownloadSupportMixin, Checksums, ChecksumResult
 
 log = logging.getLogger("llmbench")
 
@@ -46,6 +46,8 @@ class LlamaCppBinary(DownloadSupportMixin):
                 return False
         else:
             log.info(f"{filename} already exists.")
+        if cresult := Checksums.check_file(full_filename) != ChecksumResult.RESULT_OK:
+            log.warning(f"Checksum error for {filename}: {cresult}")
         self.zip_filename = full_filename
         self.llama_cpp_variant = filename[:-4]
         return True

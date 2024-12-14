@@ -31,8 +31,8 @@ class BenchConfig:
 
 
 class ModelSize(IntEnum):
-    TINY = 1
-    SMALL = 2
+    TINY = 1    # 8 GB VRAM
+    SMALL = 2   # 16 GB VRAM
 
 
 @dataclass(kw_only=True, frozen=True)
@@ -40,4 +40,3 @@ class ModelDescription:
     size: ModelSize
     name: str
     url: str
-

@@ -5,6 +5,7 @@ import sys, os
 from config import BenchConfig, ModelDescription, ModelSize, config_logger
 from supportllm import LlamaCppBinary
 from supportmodel import GGUFModel
+from downloadsupport import Checksums
 
 DEFAULT_ENGINE_LIST = ['vulkan', 'openblas']
 DEFAULT_ENGINE_OS = 'win'
@@ -51,6 +52,8 @@ def exit(message: str, code=1):
 def main():
     bench_config = process_args()
     print(bench_config)
+
+    Checksums.init()
 
     llamacpps = [
         LlamaCppBinary(

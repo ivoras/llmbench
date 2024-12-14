@@ -4,7 +4,7 @@ from urllib.error import HTTPError
 from urllib.request import urlretrieve
 
 from config import ModelDescription
-from downloadsupport import DownloadSupportMixin
+from downloadsupport import DownloadSupportMixin, Checksums, ChecksumResult
 
 log = logging.getLogger("llmbench")
 
@@ -29,4 +29,6 @@ class GGUFModel(DownloadSupportMixin):
                 return False
         else:
             log.info(f"{self.model_filename} already exists.")
+        if cresult := Checksums.check_file(self.model_full_filename) != ChecksumResult.RESULT_OK:
+            log.warning(f"Checksum error for {self.model_filename}: {cresult}")
         return True
